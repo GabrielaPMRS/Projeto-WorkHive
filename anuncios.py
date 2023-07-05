@@ -1,3 +1,4 @@
+#cria anuncios
 import json
 '''
 with open('anuncios.json', 'w') as arquivo:
