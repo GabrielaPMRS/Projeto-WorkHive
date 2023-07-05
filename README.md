@@ -4,10 +4,15 @@
 
  ## Funcionalidades:
  Criação de conta
+ 
  Edição de conta
+ 
  Deletar conta
+ 
  Criação de anúncios
+ 
  Aba para checar anúncios
+ 
 
  ## Membros do grupo:
  Donvicton Monteiro, Edeilson costa, Gabriela Pontes, Lucas Vinicius.
