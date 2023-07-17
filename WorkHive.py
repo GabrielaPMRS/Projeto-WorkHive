@@ -1,6 +1,8 @@
 users = []
 anuncios = []
 logged = False
+logged_user = ''
+
 def criar_usuario():
     usuario = input('digite seu usuario:')
     cpf = input('digite seu cpf:')
@@ -31,10 +33,10 @@ def editar_usuario():
 
 def deletar_usuario():
 
-    usuario = input('digite seu usuario:')
+    usuario = input('digite seu usuario: ')
     for i in users:
         if i['usuario'] == usuario:
-            if i['senha'] != input('digite sua senha:'):
+            if i['senha'] != input('digite sua senha: '):
                 print('senha incorreta')
                 return
             else:
@@ -51,6 +53,8 @@ def login():
                 print('senha incorreta')
                 return False
             else:
+                global logged_user
+                logged_user = usuario
                 return True
 
 def novo_anuncios():
@@ -61,13 +65,22 @@ def novo_anuncios():
 
     id = len(anuncios)+1
 
-    new_anuncios = {
-        'Name' : produto,
-        'Descricao' : descricao,
-        'Valor' : valor,
-        'ID' : id
-    }
-    anuncios.append(new_anuncios)
+    anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id})
+
+def deletar_anuncio():
+    identificador = int(input('Digite o "ID" do seu auncio: '))
+
+    #print(type(identificador))
+    for i in anuncios:
+        if i['ID'] == identificador:
+            current_user = input('Confirme seu usuário: ')
+            if current_user == logged_user:
+                anuncios.remove(i)
+                return
+            else:
+                print('Não foi possivel deletar o anúncio.')
+                return
+    print('Anúncio não encontrado.')
 
 print('bem vindo ao nosso site :)')
 
@@ -81,7 +94,8 @@ while True:
         print('2 para editar conta')
         print('3 para deletar conta')
         print('5 para criar anuncios')
-        print('6 visualizar ids de anuncios')
+        print('6 para deletar anúncios')
+        print('7 visualizar ids de anuncios')
 
     print('9 para mostrar as contas existentes')
     print('99 para sair')
@@ -109,6 +123,8 @@ while True:
         if opt == 5:
             novo_anuncios()
         if opt == 6:
+            deletar_anuncio()
+        if opt == 7:
             for i in anuncios:
                 print(i)
 
