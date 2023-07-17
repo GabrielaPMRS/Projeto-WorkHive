@@ -1,5 +1,6 @@
 users = []
 anuncios = []
+favoritos = []
 logged = False
 logged_user = ''
 
@@ -82,10 +83,19 @@ def deletar_anuncio():
                 return
     print('Anúncio não encontrado.')
 
-print('bem vindo ao nosso site :)')
+def favoritar():
+    id_anuncio = int(input('Qual o ID do anúncio que deseja favoritar? '))
+    for i in anuncios:
+        if i['ID'] == id_anuncio:
+            favoritos.append(id_anuncio)
+            break
+
+
+print('Bem vindo ao WorkHive :)\n')
 
 while True:
 
+    print('\n**** MENU ****\n')
     print('0 para logar em uma conta')
     print('1 para criar conta')
     
@@ -96,8 +106,11 @@ while True:
         print('5 para criar anuncios')
         print('6 para deletar anúncios')
         print('7 visualizar ids de anuncios')
+        print('8 para favoritar um anúncio')
+        print('9 visualizar aba de favoritos')
 
-    print('9 para mostrar as contas existentes')
+
+    print('10 para mostrar as contas existentes')
     print('99 para sair')
     opt = input('digite uma opcao: ')
 
@@ -110,7 +123,7 @@ while True:
         logged = login()
     if opt == 1:
         criar_usuario()
-    elif opt == 9:
+    elif opt == 10:
         for i in range(len(users)):
             print(users[i])
 
@@ -127,6 +140,12 @@ while True:
         if opt == 7:
             for i in anuncios:
                 print(i)
+        if opt == 8:
+            favoritar()
+        if opt == 9:
+            print('Aba de favoritos: ')
+            
+            [print(x, end=' ') for x in favoritos]   
 
     elif opt == 99:
         break
