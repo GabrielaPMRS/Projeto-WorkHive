@@ -8,8 +8,7 @@ def criar_usuario():
     cpf = input('digite seu cpf:')
     senha = input('digite sua senha:')
 
-    users.append({'usuario': usuario, 'cpf':cpf, 'senha':senha})
-
+    users.append({'usuario': usuario, 'cpf':cpf, 'senha':senha, 'feedback': [], 'notificacoes': []})
 def editar_usuario():
 
     usuario = input('digite seu usuario:')
@@ -67,7 +66,9 @@ def novo_anuncios():
     feedbacks = []
 
     anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id, 'Categoria': categoria, 'Feedbacks': feedbacks})
-
+    for user in users:
+        if user['usuario'] != logged_user:
+            user['notificacoes'].append('Novo anúncio disponível: ' + produto)
 def deletar_anuncio():
     identificador = int(input('Digite o "ID" do seu auncio: '))
 
@@ -115,6 +116,20 @@ def visualizar_feedbacks():
             return
     print("Nenhum anúncio encontrado para o usuário", logged_user)
 
+def mostrar_notificacoes():
+    for user in users:
+        if user['usuario'] == logged_user:
+            notificacoes = user['notificacoes']
+            if notificacoes:
+                print("Você tem", len(notificacoes), "notificação(ões):")
+                for notificacao in notificacoes:
+                    print(notificacao)
+                user['notificacoes'] = []  # Limpa as notificações após exibi-las
+            else:
+                print("Você não possui notificações.")
+            return
+    print('Usuário não encontrado.')
+
 print('bem vindo ao nosso site :)')
 
 while True:
@@ -132,6 +147,7 @@ while True:
         print('7 visualizar ids de anuncios')
         print('8 para listar anuncios por categoria')
         print('10 para visualizar feedbacks')
+        print('11 para visualizar notificações')
     print('9 para mostrar as contas existentes')
     print('99 para sair')
     opt = input('digite uma opcao: ')
@@ -167,7 +183,10 @@ while True:
         if opt == 8:
             listar_anuncios_por_categoria()
         if opt == 10:
-            visualizar_feedbacks()    
+            visualizar_feedbacks()
+        if opt == 11:
+            mostrar_notificacoes()
+            
     elif opt == 99:
         break
     else:
