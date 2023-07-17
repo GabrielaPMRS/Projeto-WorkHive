@@ -64,8 +64,9 @@ def novo_anuncios():
     valor = input('valor: ')
     categoria = input('Categoria: ')
     id = len(anuncios)+1
+    feedbacks = []
 
-    anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id, 'Categoria': categoria})
+    anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id, 'Categoria': categoria, 'Feedbacks': feedbacks})
 
 def deletar_anuncio():
     identificador = int(input('Digite o "ID" do seu auncio: '))
@@ -89,6 +90,31 @@ def listar_anuncios_por_categoria():
         if anuncio['Categoria'].lower() == categoria.lower():
             print(anuncio)
 
+def adicionar_feedback_anuncio():
+    identificador = int(input('Digite o ID do anúncio: '))
+    feedback = input('Digite seu feedback: ')
+
+    for anuncio in anuncios:
+        if anuncio['ID'] == identificador:
+            anuncio['Feedbacks'].append(feedback)
+            print('Feedback adicionado com sucesso!')
+            return
+
+    print('Anúncio não encontrado.')
+
+def visualizar_feedbacks():
+    for anuncio in anuncios:
+        if anuncio['Usuario'] == logged_user:
+            feedbacks = anuncio['Feedbacks']
+            if len(feedbacks) > 0:
+                print("Feedbacks do anúncio", anuncio['ID'], ":")
+                for feedback in feedbacks:
+                    print(feedback)
+            else:
+                print("Não há feedbacks para o anúncio", anuncio['ID'])
+            return
+    print("Nenhum anúncio encontrado para o usuário", logged_user)
+
 print('bem vindo ao nosso site :)')
 
 while True:
@@ -100,10 +126,12 @@ while True:
     if logged == True:
         print('2 para editar conta')
         print('3 para deletar conta')
+        print('4 para adicionar feedback a um anúncio')
         print('5 para criar anuncios')
         print('6 para deletar anúncios')
         print('7 visualizar ids de anuncios')
         print('8 para listar anuncios por categoria')
+        print('10 para visualizar feedbacks')
     print('9 para mostrar as contas existentes')
     print('99 para sair')
     opt = input('digite uma opcao: ')
@@ -127,6 +155,8 @@ while True:
             editar_usuario()
         elif opt == 3:
             deletar_usuario()
+        if opt == 4:
+            adicionar_feedback_anuncio()     
         if opt == 5:
             novo_anuncios()
         if opt == 6:
@@ -136,11 +166,11 @@ while True:
                 print(i)
         if opt == 8:
             listar_anuncios_por_categoria()
+        if opt == 10:
+            visualizar_feedbacks()    
     elif opt == 99:
         break
     else:
         print('opcao invalida')
 
 print('ate logo ^^')
-
-   
