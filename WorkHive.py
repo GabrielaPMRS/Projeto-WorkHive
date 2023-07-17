@@ -62,10 +62,10 @@ def novo_anuncios():
     produto = input('produto: ')
     descricao = input('descricao: ')
     valor = input('valor: ')
-
+    categoria = input('Categoria: ')
     id = len(anuncios)+1
 
-    anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id})
+    anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id, 'Categoria': categoria})
 
 def deletar_anuncio():
     identificador = int(input('Digite o "ID" do seu auncio: '))
@@ -82,6 +82,13 @@ def deletar_anuncio():
                 return
     print('Anúncio não encontrado.')
 
+def listar_anuncios_por_categoria():
+    categoria = input('Digite a categoria: ')
+
+    for anuncio in anuncios:
+        if anuncio['Categoria'].lower() == categoria.lower():
+            print(anuncio)
+
 print('bem vindo ao nosso site :)')
 
 while True:
@@ -96,7 +103,7 @@ while True:
         print('5 para criar anuncios')
         print('6 para deletar anúncios')
         print('7 visualizar ids de anuncios')
-
+        print('8 para listar anuncios por categoria')
     print('9 para mostrar as contas existentes')
     print('99 para sair')
     opt = input('digite uma opcao: ')
@@ -127,10 +134,10 @@ while True:
         if opt == 7:
             for i in anuncios:
                 print(i)
-
+        if opt == 8:
+            listar_anuncios_por_categoria()
     elif opt == 99:
         break
-
     else:
         print('opcao invalida')
 
