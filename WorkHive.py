@@ -1,65 +1,46 @@
+import SendGmail
+import MockData
+
+DEBUG = True
 users = []
 anuncios = []
 favoritos = []
 logged = False
 logged_user = ''
-def mock_data(users, anuncios):
-    users.append({'usuario': 'joao', 'cpf':'234', 'senha':'1', 'feedback': [], 'notificacoes': []})
-    users.append({'usuario': 'maria', 'cpf':'12344', 'senha':'2', 'feedback': [], 'notificacoes': []})
-    users.append({'usuario': 'rita', 'cpf':'1234567789', 'senha':'3', 'feedback': [], 'notificacoes': []})
-    anuncios.append({
-        'Usuario': 'joao', 
-        'Nome': 'carro', 
-        'Descrição': 'anda', 
-        'Valor': '123', 
-        'ID': 1, 
-        'Categoria': 'automovel',
-        'Feedbacks': ['util']
-        })
-    anuncios.append({
-        'Usuario': 'maria', 
-        'Nome': 'vestido', 
-        'Descrição': 'veste', 
-        'Valor': '1234', 
-        'ID': 2, 
-        'Categoria': 'roupa', 
-        'Feedbacks': []
-        })
-    
+
 def criar_usuario():
-    usuario = input('digite seu usuario:')
-    cpf = input('digite seu cpf:')
-    senha = input('digite sua senha:')
+    usuario = input('Digite seu usuario:')
+    cpf = input('Digite seu cpf:')
+    senha = input('Digite sua senha:')
 
     users.append({'usuario': usuario, 'cpf':cpf, 'senha':senha, 'feedback': [], 'notificacoes': []})
-def editar_usuario():
 
+def editar_usuario():
     usuario = input('digite seu usuario:')
 
     for i in range(len(users)):
         if users[i]['usuario'] == usuario:
-            if users[i]['senha'] != input('digite sua senha:'):
-                print('senha incorreta')
+            if users[i]['senha'] != input('Digite sua senha:'):
+                print('Senha incorreta')
                 return
             else:
-                print('o que deseja mudar?')
+                print('O que deseja mudar?')
                 print('1 para usuario')
                 print('2 para senha')
-                opt = int(input("digite sua opcao:"))
+                opt = int(input("Digite sua opção:"))
                 if opt == 1:
-                    users[i]['usuario'] = input('digite um novo usuario:')
+                    users[i]['usuario'] = input('Digite um novo usuario:')
                 if opt == 2:
-                    users[i]['senha'] = input('digite a nova senha:')
+                    users[i]['senha'] = input('Digite a nova senha:')
                 return
-    print('usuario nao encontrado')
+    print('Usuário não encontrado')
 
 def deletar_usuario():
-
-    usuario = input('digite seu usuario: ')
+    usuario = input('Digite seu usuario: ')
     for i in users:
         if i['usuario'] == usuario:
-            if i['senha'] != input('digite sua senha: '):
-                print('senha incorreta')
+            if i['senha'] != input('Digite sua senha: '):
+                print('Senha incorreta')
                 return
             else:
                 users.remove(i)
@@ -68,11 +49,11 @@ def deletar_usuario():
     print('usuario nao encontrado')
 
 def login():
-    usuario = input('digite seu usuario:')
+    usuario = input('Digite seu usuario:')
     for i in users:
         if i['usuario'] == usuario:
-            if i['senha'] != input('digite sua senha:'):
-                print('senha incorreta')
+            if i['senha'] != input('Digite sua senha:'):
+                print('Senha incorreta')
                 return False
             else:
                 global logged_user
@@ -80,10 +61,9 @@ def login():
                 return True
 
 def novo_anuncios():
-
-    produto = input('produto: ')
-    descricao = input('descricao: ')
-    valor = input('valor: ')
+    produto = input('Produto: ')
+    descricao = input('Descricao: ')
+    valor = input('Valor: ')
     categoria = input('Categoria: ')
     id = len(anuncios)+1
     feedbacks = []
@@ -92,9 +72,9 @@ def novo_anuncios():
     for user in users:
         if user['usuario'] != logged_user:
             user['notificacoes'].append('Novo anúncio disponível: ' + produto)
+
 def deletar_anuncio():
     identificador = int(input('Digite o "ID" do seu auncio: '))
-
     #print(type(identificador))
     for i in anuncios:
         if i['ID'] == identificador:
@@ -114,8 +94,6 @@ def favoritar():
             favoritos.append(id_anuncio)
             break
 
-
-print('Bem vindo ao WorkHive :)\n')
 def listar_anuncios_por_categoria():
     categoria = input('Digite a categoria: ')
 
@@ -162,18 +140,18 @@ def mostrar_notificacoes():
             return
     print('Usuário não encontrado.')
 
-print('bem vindo ao nosso site :)')
+print('\nBem vindo ao WorkHive :)\n')
 
-mock_data(users, anuncios)
+if DEBUG:
+    MockData.mock_data(users, anuncios)
+
 while True:
-
     print('\n**** MENU ****\n')
     print('0 para logar em uma conta')
     print('1 para criar conta')
     print('2 para mostrar as contas existentes')
     print('3 para listar anuncios por categoria')
     
-
     if logged == True:
         print('4 para editar conta')
         print('5 para deletar conta')
@@ -185,10 +163,11 @@ while True:
         print('11 visualizar aba de favoritos')
         print('12 para visualizar feedbacks')
         print('13 para visualizar notificações')
+        print('14 para enviar email para o prestador de serviço')
 
     print('99 para sair')
     
-    opt = input('\nDigite uma opcao: ')
+    opt = input('\nDigite uma opção: ')
 
     try:
         opt = int(opt)
@@ -230,6 +209,8 @@ while True:
             visualizar_feedbacks()
         if opt == 13:
             mostrar_notificacoes()
+        if opt == 14:
+            SendGmail.send_email()
             
     elif opt == 99:
         break
