@@ -9,8 +9,7 @@ def criar_usuario():
     cpf = input('digite seu cpf:')
     senha = input('digite sua senha:')
 
-    users.append({'usuario': usuario, 'cpf':cpf, 'senha':senha})
-
+    users.append({'usuario': usuario, 'cpf':cpf, 'senha':senha, 'feedback': [], 'notificacoes': []})
 def editar_usuario():
 
     usuario = input('digite seu usuario:')
@@ -63,11 +62,14 @@ def novo_anuncios():
     produto = input('produto: ')
     descricao = input('descricao: ')
     valor = input('valor: ')
-
+    categoria = input('Categoria: ')
     id = len(anuncios)+1
+    feedbacks = []
 
-    anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id})
-
+    anuncios.append({'Usuario': logged_user, 'Nome': produto, 'Descrição': descricao, 'Valor': valor, 'ID': id, 'Categoria': categoria, 'Feedbacks': feedbacks})
+    for user in users:
+        if user['usuario'] != logged_user:
+            user['notificacoes'].append('Novo anúncio disponível: ' + produto)
 def deletar_anuncio():
     identificador = int(input('Digite o "ID" do seu auncio: '))
 
@@ -92,67 +94,122 @@ def favoritar():
 
 
 print('Bem vindo ao WorkHive :)\n')
+def listar_anuncios_por_categoria():
+    categoria = input('Digite a categoria: ')
+
+    for anuncio in anuncios:
+        if anuncio['Categoria'].lower() == categoria.lower():
+            print(anuncio)
+
+def adicionar_feedback_anuncio():
+    identificador = int(input('Digite o ID do anúncio: '))
+    feedback = input('Digite seu feedback: ')
+
+    for anuncio in anuncios:
+        if anuncio['ID'] == identificador:
+            anuncio['Feedbacks'].append(feedback)
+            print('Feedback adicionado com sucesso!')
+            return
+
+    print('Anúncio não encontrado.')
+
+def visualizar_feedbacks():
+    for anuncio in anuncios:
+        if anuncio['Usuario'] == logged_user:
+            feedbacks = anuncio['Feedbacks']
+            if len(feedbacks) > 0:
+                print("Feedbacks do anúncio", anuncio['ID'], ":")
+                for feedback in feedbacks:
+                    print(feedback)
+            else:
+                print("Não há feedbacks para o anúncio", anuncio['ID'])
+            return
+    print("Nenhum anúncio encontrado para o usuário", logged_user)
+
+def mostrar_notificacoes():
+    for user in users:
+        if user['usuario'] == logged_user:
+            notificacoes = user['notificacoes']
+            if notificacoes:
+                print("Você tem", len(notificacoes), "notificação(ões):")
+                for notificacao in notificacoes:
+                    print(notificacao)
+                user['notificacoes'] = []  # Limpa as notificações após exibi-las
+            else:
+                print("Você não possui notificações.")
+            return
+    print('Usuário não encontrado.')
+
+print('bem vindo ao nosso site :)')
 
 while True:
 
     print('\n**** MENU ****\n')
     print('0 para logar em uma conta')
     print('1 para criar conta')
-    
+    print('2 para mostrar as contas existentes')
+    print('3 para listar anuncios por categoria')
 
     if logged == True:
-        print('2 para editar conta')
-        print('3 para deletar conta')
-        print('5 para criar anuncios')
-        print('6 para deletar anúncios')
-        print('7 visualizar ids de anuncios')
-        print('8 para favoritar um anúncio')
-        print('9 visualizar aba de favoritos')
+        print('4 para editar conta')
+        print('5 para deletar conta')
+        print('6 para adicionar feedback a um anúncio')
+        print('7 para criar anuncios')
+        print('8 para deletar anúncios')
+        print('9 visualizar ids de anuncios')
+        print('10 para favoritar um anúncio')
+        print('11 visualizar aba de favoritos')
+        print('12 para visualizar feedbacks')
+        print('13 para visualizar notificações')
 
-
-    print('10 para mostrar as contas existentes')
     print('99 para sair')
-    opt = input('digite uma opcao: ')
+    
+    opt = input('\nDigite uma opcao: ')
 
     try:
         opt = int(opt)
     except Exception:
-        print('digite apenas numeros')
+        print('Digite apenas numeros')
 
     if opt == 0:
         logged = login()
     if opt == 1:
         criar_usuario()
-    elif opt == 10:
+    elif opt == 2:
         for i in range(len(users)):
             print(users[i])
 
     elif logged == True:
         
-        if opt == 2:
+        if opt == 4:
             editar_usuario()
-        elif opt == 3:
+        elif opt == 5:
             deletar_usuario()
-        if opt == 5:
-            novo_anuncios()
         if opt == 6:
-            deletar_anuncio()
+            adicionar_feedback_anuncio()     
         if opt == 7:
+            novo_anuncios()
+        if opt == 8:
+            deletar_anuncio()
+        if opt == 9:
             for i in anuncios:
                 print(i)
-        if opt == 8:
+        if opt == 10:
             favoritar()
-        if opt == 9:
+        if opt == 11:
             print('Aba de favoritos: ')
             
             [print(x, end=' ') for x in favoritos]   
 
+            listar_anuncios_por_categoria()
+        if opt == 12:
+            visualizar_feedbacks()
+        if opt == 13:
+            mostrar_notificacoes()
+            
     elif opt == 99:
         break
-
     else:
-        print('opcao invalida')
+        print('Opção inválida')
 
-print('ate logo ^^')
-
-   
+print('Até logo ^^')
