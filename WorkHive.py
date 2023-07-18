@@ -3,7 +3,29 @@ anuncios = []
 favoritos = []
 logged = False
 logged_user = ''
-
+def mock_data(users, anuncios):
+    users.append({'usuario': 'joao', 'cpf':'234', 'senha':'1', 'feedback': [], 'notificacoes': []})
+    users.append({'usuario': 'maria', 'cpf':'12344', 'senha':'2', 'feedback': [], 'notificacoes': []})
+    users.append({'usuario': 'rita', 'cpf':'1234567789', 'senha':'3', 'feedback': [], 'notificacoes': []})
+    anuncios.append({
+        'Usuario': 'joao', 
+        'Nome': 'carro', 
+        'Descrição': 'anda', 
+        'Valor': '123', 
+        'ID': 1, 
+        'Categoria': 'automovel',
+        'Feedbacks': ['util']
+        })
+    anuncios.append({
+        'Usuario': 'maria', 
+        'Nome': 'vestido', 
+        'Descrição': 'veste', 
+        'Valor': '1234', 
+        'ID': 2, 
+        'Categoria': 'roupa', 
+        'Feedbacks': []
+        })
+    
 def criar_usuario():
     usuario = input('digite seu usuario:')
     cpf = input('digite seu cpf:')
@@ -142,6 +164,7 @@ def mostrar_notificacoes():
 
 print('bem vindo ao nosso site :)')
 
+mock_data(users, anuncios)
 while True:
 
     print('\n**** MENU ****\n')
@@ -149,6 +172,7 @@ while True:
     print('1 para criar conta')
     print('2 para mostrar as contas existentes')
     print('3 para listar anuncios por categoria')
+    
 
     if logged == True:
         print('4 para editar conta')
@@ -173,17 +197,19 @@ while True:
 
     if opt == 0:
         logged = login()
-    if opt == 1:
+    elif opt == 1:
         criar_usuario()
     elif opt == 2:
         for i in range(len(users)):
             print(users[i])
+    elif opt == 3:
+        listar_anuncios_por_categoria()
 
     elif logged == True:
         
         if opt == 4:
             editar_usuario()
-        elif opt == 5:
+        if opt == 5:
             deletar_usuario()
         if opt == 6:
             adicionar_feedback_anuncio()     
@@ -197,11 +223,9 @@ while True:
         if opt == 10:
             favoritar()
         if opt == 11:
-            print('Aba de favoritos: ')
-            
-            [print(x, end=' ') for x in favoritos]   
-
-            listar_anuncios_por_categoria()
+            print('Aba de favoritos: ',end=' ')
+            for favorito in favoritos:
+                print(favorito, end=' ')       
         if opt == 12:
             visualizar_feedbacks()
         if opt == 13:
