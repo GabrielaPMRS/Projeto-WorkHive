@@ -149,7 +149,7 @@ while True:
     print('\n**** MENU ****\n')
     print('0 para logar em uma conta')
     print('1 para criar conta')
-    print('2 para mostrar as contas existentes')
+    print('2 para mostrar as contas existentes') #retirar no código final
     print('3 para listar anuncios por categoria')
     
     if logged == True:
