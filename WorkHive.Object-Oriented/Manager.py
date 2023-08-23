@@ -1,5 +1,6 @@
 # Manager class
 from User import User
+from Ad import Ad
 
 class Manager():
     def __init__(self):
@@ -9,6 +10,16 @@ class Manager():
             'Gabi': User('Gabi', '1234556', '123'),
             'Lara': User('Lara', '9876543', '321')
         }
+        
+
+        self.ads_dict = {
+            1: Ad('Gabi', 'tecnologia', 'crio sites', '76543'),
+            2: Ad('Gabi', 'Marcenaria', 'mesas artesanais', '123'),
+            3: Ad('Lara', 'Hidráulico', 'conserto canos', '45'),
+            4: Ad('Lara', 'eletricista', 'crio tomadas', '150'),
+        }
+
+        self.category = ['tecnologia', 'consultoria juridica','consultoria engenharia' 'ensino']
 
     def start(self):
         while True:
@@ -17,15 +28,15 @@ class Manager():
                 print('\n*** MENU ***')
                 print('1 para criar usuario.')
                 print('2 para fazer login.')
-                print('3 para mostrar usuarios cadastrados.')
+                print('999 para mostrar usuarios cadastrados.')
 
 
                 option = int(input ('\nSelect option: '))
 
                 if option == 1:
                     username = input('Digite seu nome de usuario: ')
-                    cpf = input('Digite seu cpf: ')
-                    password = input('Crie sua senha: ')
+                    cpf = input('Digite seu cpf (apenas números): ')
+                    password = input('Crie sua senha (apenas números): ')
 
                     self.create_user(username, cpf, password)
 
@@ -35,7 +46,7 @@ class Manager():
 
                     self.login(username, password)
 
-                elif option == 3:
+                elif option == 999:
                     for user in self.users.values():
                         print(f"username: {user.username} || cpf: {user.cpf} || password: {user.password}")
 
@@ -45,7 +56,10 @@ class Manager():
                 print('1 para editar usuario.')
                 print('2 para remover usuario.')
                 print('3 para deslogar.')
-                print('4 para mostrar usuarios cadastrados.')
+                print('4 para criar um anúncio')
+                print('5 para deletar um anúncio')
+                print('6 para mostrar anúncios existentes')
+                print('999 para mostrar usuarios cadastrados.')
                 
 
                 option = int(input ('\nSelect option: '))
@@ -60,8 +74,38 @@ class Manager():
                     self.logout()
 
                 elif option == 4:
+                    user = self.users[self.logged_username]
+                    category = input('Qual a categoria do serviço? ')
+                    description = input('Descreva o serviço: ')
+                    price = float(input('Qual o preço do serviço? R$'))
+
+                    user.create_ad(self.ads_dict, category, description, price)
+
+                elif option == 5:
+                    id = int(input('Digite o ID do anúncio a ser deletado! '))
+                    user = self.users[self.logged_username]
+
+                    user.delete_ad(id, self.ads_dict, self.logged_username)
+
+                    
+                    
+
+                elif option == 6:
+                    for id, ad in self.ads_dict.items():
+                        print(f"ID: {id}")
+                        print(f"Username: {ad.username}")
+                        print(f"Categoria: {ad.category}")
+                        print(f"Description: {ad.description}")
+                        print(f"Price: R${ad.price}\n")
+                        
+                        
+                        
+
+                elif option == 999:
                     for user in self.users.values():
                         print(f"username: {user.username} || cpf: {user.cpf} || password: {user.password}")
+
+                 
 
 
     def login(self, username, password):

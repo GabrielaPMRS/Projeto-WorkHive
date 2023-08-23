@@ -1,5 +1,5 @@
 import SendGmail
-import MockData
+import Deprected.MockData as MockData
 
 DEBUG = True
 users = []
