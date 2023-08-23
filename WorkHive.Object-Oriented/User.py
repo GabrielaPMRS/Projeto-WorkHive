@@ -1,16 +1,19 @@
 from Ad import Ad
 
 class User():
+    
     def __init__(self, username, cpf, password):
         self.username = username
         self.cpf = cpf
         self.password = password
 
+        self.favorite = []
+
     def create_ad(self, ads_dict, category, description, price):
         ad = Ad(self.username, category, description, price)
         ad_id = len(ads_dict) + 1
         ads_dict.update({ad_id: ad})
-        print(f"Anúncio de id: {ad_id}criado com sucesso!\n")
+        print(f"Anúncio de id: {ad_id} criado com sucesso!\n")
 
     def delete_ad(self, id, ads_dict, logged_username):
         if ads_dict.get(id, None):
@@ -22,6 +25,9 @@ class User():
         else:
             print(f"O id: {id} não exite!\n")
 
+
+    def print_favs(self, logged_username):
+        print(f"Lista de favoritos de {logged_username}: {self.favorite}")
 
 if __name__ == "__main__":
     user1 = User('Gabi', '06348242447', '123')

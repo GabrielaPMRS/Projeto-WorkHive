@@ -20,6 +20,7 @@ class Manager():
         }
 
         self.category = ['tecnologia', 'consultoria juridica','consultoria engenharia' 'ensino']
+        
 
     def start(self):
         while True:
@@ -59,6 +60,8 @@ class Manager():
                 print('4 para criar um anúncio')
                 print('5 para deletar um anúncio')
                 print('6 para mostrar anúncios existentes')
+                print('7 para favoritar um anúncio')
+                print('8 para mostrar lista de favoritos de um usuário')
                 print('999 para mostrar usuarios cadastrados.')
                 
 
@@ -87,8 +90,6 @@ class Manager():
 
                     user.delete_ad(id, self.ads_dict, self.logged_username)
 
-                    
-                    
 
                 elif option == 6:
                     for id, ad in self.ads_dict.items():
@@ -97,9 +98,13 @@ class Manager():
                         print(f"Categoria: {ad.category}")
                         print(f"Description: {ad.description}")
                         print(f"Price: R${ad.price}\n")
-                        
-                        
-                        
+                             
+                elif option == 7:
+                    self.add_favorite()    
+
+                elif option == 8:
+                    user = self.users[self.logged_username]
+                    user.print_favs(self.logged_username)         
 
                 elif option == 999:
                     for user in self.users.values():
@@ -149,6 +154,13 @@ class Manager():
     def logout(self):
         self.logged_username = None
 
+    def add_favorite(self):
+        id = int(input('Digite o ID do anúncio que deseja favoritar: '))
+        if self.ads_dict.get(id, None):
+            self.users[self.logged_username].favorite.append(id)
+            print(self.users[self.logged_username].favorite)
+        else:
+            print('Esse ID não existe!\n')
 
 
 if __name__ == "__main__":
