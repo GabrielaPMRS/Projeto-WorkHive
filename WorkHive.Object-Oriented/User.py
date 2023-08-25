@@ -8,6 +8,7 @@ class User():
         self.password = password
 
         self.favorite = []
+        self.feedbacks = []
 
     def create_ad(self, ads_dict, category, description, price):
         ad = Ad(self.username, category, description, price)

@@ -4,5 +4,7 @@ class Ad():
         self.category = category
         self.description = description
         self.price = price
+        
+        self.feedbacks = []
 
 
