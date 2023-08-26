@@ -64,6 +64,8 @@ class Manager():
                 print('7 para favoritar um anúncio.')
                 print('8 para mostrar lista de favoritos de um usuário.')
                 print('9 para escrever um feedback.')
+                print('10 para listar os feedbacks de um usuário.')
+                print('11 para listar os feedbacks de um anúncio.')
                 print('999 para mostrar usuarios cadastrados.')
                 
 
@@ -110,8 +112,19 @@ class Manager():
 
                 elif option == 9:
                     ad_id = int(input('Digite o ID do anúncio que você deseja dar um feedback: '))
-                    feedback = input('Digite seu feedback: ')
-                    self.add_feedback(ad_id, self.logged_username, feedback)
+                    if self.ads_dict.get(ad_id, None):
+                        feedback = input('Digite seu feedback: ')
+                        self.add_feedback(ad_id, self.logged_username, feedback)
+                    else:
+                        print('Este anúncio não existe!\n')
+
+                elif option == 10:
+                    username = input('De qual usuário deseja ver os feedbacks?: ')
+                    self.users[username].print_fb_by_user(username, self.fb_master_list)
+
+                elif option == 11:
+                    ad_id = int(input('Qual o id do anúncio que deseja ver os feedbacks?: '))
+                    self.ads_dict[ad_id].print_fb_by_ad(ad_id, self.fb_master_list)
 
                 elif option == 999:
                     for user in self.users.values():
@@ -168,6 +181,7 @@ class Manager():
         else:
             print('Esse ID não existe!\n')
 
+
     def add_feedback(self, ad_id, username, feedback):
         feedback = Feedback(ad_id, username, feedback)
         fb_id = len(self.fb_master_list) + 1
@@ -176,17 +190,15 @@ class Manager():
         print(', '.join([fb.feedback for fb in self.fb_master_list]))
 
         self.users[self.logged_username].feedbacks.append(fb_id)
-        print('*Lista os feedbacks por usuário:')
-        print(', '.join([str(item) for item in self.users[self.logged_username].feedbacks])) # lista os feedbacks por usuario
+        # print('*Lista os feedbacks por usuário:')
+        # print(', '.join([str(item) for item in self.users[self.logged_username].feedbacks])) # lista os feedbacks por usuario
 
         self.ads_dict[ad_id].feedbacks.append(fb_id)
-        print('*Lista os feedbacks por anúncio:')
-        print(', '.join([str(item) for item in self.ads_dict[ad_id].feedbacks])) # Lista os feedbacks por anúncio
-        
-
+        # print('*Lista os feedbacks por anúncio:')
+        # print(', '.join([str(item) for item in self.ads_dict[ad_id].feedbacks])) # Lista os feedbacks por anúncio
         
         
-            
+    
 
 if __name__ == "__main__":
     manager = Manager()

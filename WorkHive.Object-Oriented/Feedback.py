@@ -3,3 +3,6 @@ class Feedback():
         self.feedback = feedback
         self.ad_id = ad_id
         self.username = username
+
+    
+            

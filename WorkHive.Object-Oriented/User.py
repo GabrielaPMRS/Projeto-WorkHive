@@ -30,6 +30,12 @@ class User():
     def print_favs(self, logged_username):
         print(f"Lista de favoritos de {logged_username}: {self.favorite}")
 
+
+    def print_fb_by_user(self, username, fb_master_list):
+        print(f"Lista de feedbacks de {username}: ")
+        for feedback in self.feedbacks:
+            print(f"Anúncio: {fb_master_list[feedback - 1].ad_id}: {fb_master_list[feedback - 1].feedback}")
+
 if __name__ == "__main__":
     user1 = User('Gabi', '06348242447', '123')
     print(user1.username)    
