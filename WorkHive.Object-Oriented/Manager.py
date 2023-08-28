@@ -2,6 +2,11 @@
 from User import User
 from Ad import Ad
 from Feedback import Feedback
+from GmailHandler import GmailHandler
+from email.message import EmailMessage
+import smtplib
+import ssl
+
 
 class Manager():
     def __init__(self):
@@ -29,6 +34,7 @@ class Manager():
         self.add_feedback(4, 'Me salvou muito')
 
         self.logged_username = None
+        
 
     def start(self):
         while True:
@@ -75,6 +81,8 @@ class Manager():
                 print('10 para listar os feedbacks de um usuário.')
                 print('11 para listar os feedbacks de um anúncio.')
                 print('12 para ver suas notificações.')
+                print('13 para enviar um email ao prestador de serviço.')
+
 
                 print('999 para mostrar usuarios cadastrados.')
                 
@@ -143,6 +151,15 @@ class Manager():
 
                 elif option == 12:
                    self.users[self.logged_username].show_notifications(self.ads_dict, self.logged_username)
+
+                elif option == 13:
+                    email_receiver = input('Email do destinatario: ')
+                    subject = input('Qual o assunto do seu email? ')
+                    print('\nLembre de informar uma forma de contato pessoal para futuro contato com o prestador de serviço.\n')
+                    body = input('Digite sua mensagem: ')
+
+                    email = GmailHandler()
+                    email.send_email(email_receiver, subject, body)
 
                 elif option == 999:
                     for user in self.users.values():
