@@ -4,16 +4,39 @@ from Notification import Notification
 class User():
     
     def __init__(self, username, cpf, password):
-        self.username = username
-        self.cpf = cpf
-        self.password = password
+        self._username = username
+        self._cpf = cpf
+        self._password = password
 
         self.favorite = []
         self.feedbacks = []
         self.notification = []
 
+    @property
+    def username(self):
+        return self._username
+    
+    @username.setter
+    def username(self, username):
+        self._username = username
+
+
+    @property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self, password):
+        self._password = password
+
+
+    @property
+    def cpf(self):
+        return self._cpf
+   
+
     def create_ad(self, ads_dict, category, description, price):
-        ad = Ad(self.username, category, description, price)
+        ad = Ad(self._username, category, description, price)
         ad_id = len(ads_dict) + 1
         ads_dict.update({ad_id: ad})
         print(f"Anúncio de id: {ad_id} criado com sucesso!\n")
@@ -47,7 +70,7 @@ class User():
 
 
     def show_notifications(self, ads_dict, logged_username):
-        if len(self.notification) == 0:
+        if len(self.notification) == 0: 
             print("Você tem 0 notificações\n")
             return
         else:

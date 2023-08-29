@@ -149,7 +149,7 @@ class Application():
 
                     if self.ads_dict.get(ad_id, None):
                         feedback = input('Digite seu feedback: ')
-                        self.add_feedback(ad_id, self.logged_username, feedback)
+                        self.add_feedback(ad_id, feedback)
                     else:
                         print('Este anúncio não existe!\n')
 
@@ -203,6 +203,9 @@ class Application():
         
 
     def edit_user(self):
+        if self.logged_username == None:
+            return None
+        
         while True:
             print('\nO que deseja mudar?')
             print('1 para usuario')
@@ -223,6 +226,8 @@ class Application():
             
 
     def delete_user(self):
+        if self.logged_username == None:
+            return None
         self.users.pop(self.logged_username)
         print(f"Usuário {self.logged_username} removido com sucesso!")
         self.logged_username = None
@@ -231,6 +236,8 @@ class Application():
         self.logged_username = None
 
     def add_favorite(self):
+        if self.logged_username == None:
+            return None
         try:
             id = int(input('Digite o ID do anúncio que deseja favoritar: '))
         except ValueError:
@@ -245,14 +252,18 @@ class Application():
 
 
     def add_feedback(self, ad_id, feedback):
+        if self.logged_username == None:
+            return None
         feedback = Feedback(ad_id, self.logged_username, feedback)
         fb_id = len(self.fb_master_list) + 1
 
-        self.fb_master_list.append(feedback) # adicionar o feedback na lista master de feedbacks
-        # print(', '.join([fb.feedback for fb in self.fb_master_list]))
+        # adiciona o feedback na lista master de feedbacks
+        self.fb_master_list.append(feedback) 
 
+        # adiciona o ID do feedback na lista de feedbacks do usuário
         self.users[self.logged_username].feedbacks.append(fb_id)
         
+        # adiciona o ID do feedback na lista de feedbacks de um anúncio
         self.ads_dict[ad_id].feedbacks.append(fb_id)
         
         
