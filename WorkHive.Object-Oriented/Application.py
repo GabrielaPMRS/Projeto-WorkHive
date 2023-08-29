@@ -1,4 +1,3 @@
-# Manager class
 from User import User
 from Ad import Ad
 from Feedback import Feedback
@@ -8,7 +7,7 @@ import smtplib
 import ssl
 
 
-class Manager():
+class Application():
     def __init__(self):
         self.logged_username = None
 
@@ -45,13 +44,16 @@ class Manager():
                 print('2 para fazer login.')
                 print('999 para mostrar usuarios cadastrados.')
 
-
-                option = int(input ('\nSelect option: '))
+                try:
+                    option = int(input ('\nSelect option: '))
+                except ValueError:
+                    print("Opção inválida.\n")
+                    continue
 
                 if option == 1:
                     username = input('Digite seu nome de usuario: ')
-                    cpf = input('Digite seu cpf (apenas números): ')
-                    password = input('Crie sua senha (apenas números): ')
+                    cpf = input('Digite seu cpf: ')
+                    password = input('Crie sua senha: ')
 
                     self.create_user(username, cpf, password)
                     
@@ -86,8 +88,12 @@ class Manager():
 
                 print('999 para mostrar usuarios cadastrados.')
                 
+                try:
+                    option = int(input ('\nSelect option: '))
+                except ValueError:
+                    print("Opção inválida.\n")
+                    continue
 
-                option = int(input ('\nSelect option: '))
 
                 if option == 1:
                     self.edit_user()
@@ -102,17 +108,26 @@ class Manager():
                     user = self.users[self.logged_username]
                     category = input('Qual a categoria do serviço? ')
                     description = input('Descreva o serviço: ')
-                    price = float(input('Qual o preço do serviço? R$'))
+
+                    try:
+                        price = float(input('Qual o preço do serviço? R$'))
+                    except ValueError:
+                        print("Valor deve ser numérico.\n")
+                        continue
 
                     ad_id = user.create_ad(self.ads_dict, category, description, price)
 
                     for user in self.users:
-                        #if user.username != self.logged_username
                         if self.users[user].username != self.logged_username:
                             self.users[user].notification.append(ad_id)
 
                 elif option == 5:
-                    id = int(input('Digite o ID do anúncio a ser deletado! '))
+                    try:
+                        id = int(input('Digite o ID do anúncio a ser deletado: '))
+                    except ValueError:
+                        print("O ID deve ser numérico!")
+                        continue
+
                     user = self.users[self.logged_username]
 
                     user.delete_ad(id, self.ads_dict, self.logged_username)
@@ -134,7 +149,12 @@ class Manager():
                     user.print_favs(self.logged_username)         
 
                 elif option == 9:
-                    ad_id = int(input('Digite o ID do anúncio que você deseja dar um feedback: '))
+                    try:
+                        ad_id = int(input('Digite o ID do anúncio que você deseja dar um feedback: '))
+                    except ValueError:
+                        print("O ID deve ser numérico!")
+                        continue
+
                     if self.ads_dict.get(ad_id, None):
                         feedback = input('Digite seu feedback: ')
                         self.add_feedback(ad_id, self.logged_username, feedback)
@@ -146,7 +166,12 @@ class Manager():
                     self.users[username].print_fb_by_user(username, self.fb_master_list)
 
                 elif option == 11:
-                    ad_id = int(input('Qual o id do anúncio que deseja ver os feedbacks?: '))
+                    try:
+                        ad_id = int(input('Qual o id do anúncio que deseja ver os feedbacks?: '))
+                    except ValueError:
+                        print("O ID deve ser numérico!")
+                        continue
+
                     self.ads_dict[ad_id].print_fb_by_ad(ad_id, self.fb_master_list)
 
                 elif option == 12:
@@ -189,16 +214,23 @@ class Manager():
         
 
     def edit_user(self):
-        print('\nO que deseja mudar?')
-        print('1 para usuario')
-        print('2 para senha\n')
-        option = int(input("Digite sua opção: "))
+        while True:
+            print('\nO que deseja mudar?')
+            print('1 para usuario')
+            print('2 para senha\n')
 
-        if option == 1:
-            self.users[self.logged_username].username = input('Digite um novo nome de usuário: ')
-        if option == 2:
-            self.users[self.logged_username].password = input('Digite uma nova senha: ')
+            try:
+                option = int(input("Digite sua opção: "))
+            except ValueError:
+                print("Opção inválida!")
+                continue
 
+            if option == 1:
+                self.users[self.logged_username].username = input('Digite um novo nome de usuário: ')
+            elif option == 2:
+                self.users[self.logged_username].password = input('Digite uma nova senha: ')
+
+            break
 
     def delete_user(self):
         self.users.pop(self.logged_username)
@@ -209,7 +241,12 @@ class Manager():
         self.logged_username = None
 
     def add_favorite(self):
-        id = int(input('Digite o ID do anúncio que deseja favoritar: '))
+        try:
+            id = int(input('Digite o ID do anúncio que deseja favoritar: '))
+        except ValueError:
+            print("O ID deve ser numérico!")
+            return None
+        
         if self.ads_dict.get(id, None):
             self.users[self.logged_username].favorite.append(id)
             print(self.users[self.logged_username].favorite)
@@ -233,5 +270,5 @@ class Manager():
     
 
 if __name__ == "__main__":
-    manager = Manager()
-    manager.start()
+    app = Application()
+    app.start()
