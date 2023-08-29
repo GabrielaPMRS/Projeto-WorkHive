@@ -3,8 +3,6 @@ from Ad import Ad
 from Feedback import Feedback
 from GmailHandler import GmailHandler
 from email.message import EmailMessage
-import smtplib
-import ssl
 
 
 class Application():
@@ -16,7 +14,6 @@ class Application():
             'Lara': User('Lara', '9876543', '321')
         }
         
-
         self.ads_dict = {
             1: Ad('Gabi', 'tecnologia', 'crio sites', '76543'),
             2: Ad('Gabi', 'Marcenaria', 'mesas artesanais', '123'),
@@ -37,7 +34,6 @@ class Application():
 
     def start(self):
         while True:
-
             if self.logged_username == None:
                 print('\n*** MENU ***')
                 print('1 para criar usuario.')
@@ -69,7 +65,6 @@ class Application():
                         print(f"username: {user.username} || cpf: {user.cpf} || password: {user.password}")
 
             else:
-
                 print('\n*** MENU ***')
                 print('1 para editar usuario.')
                 print('2 para remover usuario.')
@@ -129,10 +124,7 @@ class Application():
                         continue
 
                     user = self.users[self.logged_username]
-
                     user.delete_ad(id, self.ads_dict, self.logged_username)
-
-
                 elif option == 6:
                     for id, ad in self.ads_dict.items():
                         print(f"ID: {id}")
@@ -189,19 +181,16 @@ class Application():
                 elif option == 999:
                     for user in self.users.values():
                         print(f"username: {user.username} || cpf: {user.cpf} || password: {user.password}")
-
-                 
-
-
+    
     def login(self, username, password):
-        user = self.users.get(username,None)
+        user = self.users.get(username, None)
         if user:
             if user.password == password:
                 self.logged_username = username
             else:
                 print('Senha incorreta! ')
         else:
-            print('Usuario nao encontrado! ')
+            print('Usuário nao encontrado! ')
         
 
     def create_user(self, username, cpf, password):
@@ -221,16 +210,17 @@ class Application():
 
             try:
                 option = int(input("Digite sua opção: "))
+                break
             except ValueError:
                 print("Opção inválida!")
                 continue
 
-            if option == 1:
-                self.users[self.logged_username].username = input('Digite um novo nome de usuário: ')
-            elif option == 2:
-                self.users[self.logged_username].password = input('Digite uma nova senha: ')
+        if option == 1:
+            self.users[self.logged_username].username = input('Digite um novo nome de usuário: ')
+        elif option == 2:
+            self.users[self.logged_username].password = input('Digite uma nova senha: ')
 
-            break
+            
 
     def delete_user(self):
         self.users.pop(self.logged_username)
@@ -259,16 +249,13 @@ class Application():
         fb_id = len(self.fb_master_list) + 1
 
         self.fb_master_list.append(feedback) # adicionar o feedback na lista master de feedbacks
-        print(', '.join([fb.feedback for fb in self.fb_master_list]))
+        # print(', '.join([fb.feedback for fb in self.fb_master_list]))
 
         self.users[self.logged_username].feedbacks.append(fb_id)
         
         self.ads_dict[ad_id].feedbacks.append(fb_id)
         
         
-        
-    
-
 if __name__ == "__main__":
     app = Application()
     app.start()
