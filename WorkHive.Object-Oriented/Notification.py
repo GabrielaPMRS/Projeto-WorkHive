@@ -1,6 +1,7 @@
 class Notification():
     def __init__(self, username, feedback):
-        self.username = username
-        self.feedback = feedback
+        self._username = username
+        self._feedback = feedback
 
+ 
     
