@@ -53,7 +53,7 @@ class User():
 
     def print_favs(self, logged_username, ads_dict):
         if len(self.favorite) != 0:
-            print(f"Lista de favoritos de {logged_username}: {self.favorite}")
+            print(f"\nLista de favoritos de {logged_username}:")
             for fav in self.favorite:
                 fav_ad = ads_dict[fav]
                 print(f"ID: {fav}")
@@ -61,7 +61,7 @@ class User():
                 print(f"Categoria: {fav_ad.category}")
                 print(f"Description: {fav_ad.description}")
                 print(f"Price: R${fav_ad.price}\n")
-                
+
         else:
             print("Esse usuário não possui anúncios favoritados\n")
 

@@ -245,7 +245,7 @@ class Application():
         
         if self.ads_dict.get(id, None):
             self.users[self.logged_username].favorite.append(id)
-            print(self.users[self.logged_username].favorite)
+            #print(self.users[self.logged_username].favorite)
         else:
             print('Esse ID não existe!\n')
 
