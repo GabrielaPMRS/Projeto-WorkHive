@@ -20,7 +20,6 @@ class User():
     def username(self, username):
         self._username = username
 
-
     @property
     def password(self):
         return self._password
@@ -28,7 +27,6 @@ class User():
     @password.setter
     def password(self, password):
         self._password = password
-
 
     @property
     def cpf(self):
@@ -53,10 +51,17 @@ class User():
         else:
             print(f"O id: {id} não exite!\n")
 
-
-    def print_favs(self, logged_username):
+    def print_favs(self, logged_username, ads_dict):
         if len(self.favorite) != 0:
             print(f"Lista de favoritos de {logged_username}: {self.favorite}")
+            for fav in self.favorite:
+                fav_ad = ads_dict[fav]
+                print(f"ID: {fav}")
+                print(f"Username: {fav_ad.username}")
+                print(f"Categoria: {fav_ad.category}")
+                print(f"Description: {fav_ad.description}")
+                print(f"Price: R${fav_ad.price}\n")
+                
         else:
             print("Esse usuário não possui anúncios favoritados\n")
 
@@ -68,8 +73,7 @@ class User():
         else:
             print("Esse usuário não fez nenhum feedback\n")
 
-
-    def show_notifications(self, ads_dict, logged_username):
+    def show_notifications(self, ads_dict):
         if len(self.notification) == 0: 
             print("Você tem 0 notificações\n")
             return
@@ -84,7 +88,6 @@ class User():
 if __name__ == "__main__":
     user1 = User('Gabi', '06348242447', '123')
     print(user1.username)    
-
 
     user2 = User('Arthur', '0634824xxx7', '123')
     print(user2.username)  

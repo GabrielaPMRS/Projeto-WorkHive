@@ -7,7 +7,6 @@ class Ad():
 
         self.feedbacks = []
 
-
     @property
     def username(self):
         return self._username  
@@ -24,7 +23,6 @@ class Ad():
     def price(self):
         return self._price
         
-
     def print_fb_by_ad(self, ad_id, fb_master_list):
         if len(self.feedbacks) != 0:
             print(f"Lista de feedbacks do anúncio {ad_id}: ")

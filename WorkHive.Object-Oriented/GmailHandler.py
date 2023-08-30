@@ -2,13 +2,11 @@ from email.message import EmailMessage
 import smtplib
 import ssl
 
-
 class GmailHandler():
     email_sender = 'noreply.workhive@gmail.com'
     email_password = 'glapmivmumcddcce'
        
     def send_email(self, email_receiver, subject, body):
-        
         #criar uma instancia
         em = EmailMessage()
         em['From'] = self.email_sender

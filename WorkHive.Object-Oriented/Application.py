@@ -15,15 +15,15 @@ class Application():
         }
         
         self.ads_dict = {
-            1: Ad('Gabi', 'tecnologia', 'crio sites', '76543'),
-            2: Ad('Gabi', 'Marcenaria', 'mesas artesanais', '123'),
+            1: Ad('Gabi', 'tecnologia', 'crio sites', '15000'),
+            2: Ad('Gabi', 'Marcenaria', 'mesas artesanais', '100'),
             3: Ad('Lara', 'Hidráulico', 'conserto canos', '45'),
             4: Ad('Lara', 'eletricista', 'crio tomadas', '150'),
         }
 
         self.category = ['tecnologia', 'consultoria juridica','consultoria engenharia' 'ensino']
-
         self.fb_master_list = []
+
         self.logged_username = 'Lara'
         self.add_feedback(1, 'Muito bem feito')
         self.logged_username = 'Gabi'
@@ -31,14 +31,13 @@ class Application():
 
         self.logged_username = None
         
-
     def start(self):
         while True:
             if self.logged_username == None:
                 print('\n*** MENU ***')
                 print('1 para criar usuario.')
                 print('2 para fazer login.')
-                print('999 para mostrar usuarios cadastrados.')
+                print('[DEBUG] 999 para mostrar usuarios cadastrados.')
 
                 try:
                     option = int(input ('\nSelect option: '))
@@ -52,8 +51,7 @@ class Application():
                     password = input('Crie sua senha: ')
 
                     self.create_user(username, cpf, password)
-                    
-
+                
                 elif option == 2:
                     username = input('Digite seu nome de usuario: ')
                     password = input('Confirme sua senha: ')
@@ -80,15 +78,13 @@ class Application():
                 print('12 para ver suas notificações.')
                 print('13 para enviar um email ao prestador de serviço.')
 
-
-                print('999 para mostrar usuarios cadastrados.')
+                print('[DEBUG] 999 para mostrar usuarios cadastrados.')
                 
                 try:
                     option = int(input ('\nSelect option: '))
                 except ValueError:
                     print("Opção inválida.\n")
                     continue
-
 
                 if option == 1:
                     self.edit_user()
@@ -125,6 +121,7 @@ class Application():
 
                     user = self.users[self.logged_username]
                     user.delete_ad(id, self.ads_dict, self.logged_username)
+
                 elif option == 6:
                     for id, ad in self.ads_dict.items():
                         print(f"ID: {id}")
@@ -138,7 +135,7 @@ class Application():
 
                 elif option == 8:
                     user = self.users[self.logged_username]
-                    user.print_favs(self.logged_username)         
+                    user.print_favs(self.logged_username, self.ads_dict)         
 
                 elif option == 9:
                     try:
@@ -167,7 +164,7 @@ class Application():
                     self.ads_dict[ad_id].print_fb_by_ad(ad_id, self.fb_master_list)
 
                 elif option == 12:
-                   self.users[self.logged_username].show_notifications(self.ads_dict, self.logged_username)
+                   self.users[self.logged_username].show_notifications(self.ads_dict)
 
                 elif option == 13:
                     email_receiver = input('Email do destinatario: ')
@@ -184,6 +181,7 @@ class Application():
     
     def login(self, username, password):
         user = self.users.get(username, None)
+        
         if user:
             if user.password == password:
                 self.logged_username = username
@@ -223,13 +221,13 @@ class Application():
         elif option == 2:
             self.users[self.logged_username].password = input('Digite uma nova senha: ')
 
-            
-
     def delete_user(self):
         if self.logged_username == None:
             return None
+        
         self.users.pop(self.logged_username)
         print(f"Usuário {self.logged_username} removido com sucesso!")
+        
         self.logged_username = None
         
     def logout(self):
@@ -238,6 +236,7 @@ class Application():
     def add_favorite(self):
         if self.logged_username == None:
             return None
+        
         try:
             id = int(input('Digite o ID do anúncio que deseja favoritar: '))
         except ValueError:
