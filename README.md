@@ -18,9 +18,9 @@
 
  7 - Favoritar anúncio.
 
- 8 - Aba de checar anúncios favoritos.
+ 8 - Aba para checar anúncios favoritos.
 
- 8 - Criar um feedback.
+ 8 - Criação um feedback.
 
  10 - Filtrar os feedbacks por usuário ou por anúncio.
 
