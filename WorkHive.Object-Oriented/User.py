@@ -1,4 +1,6 @@
 from Ad import Ad
+from Ad import OfferAd
+from Ad import LookingForAd
 from Notification import Notification
 
 class User():
@@ -33,8 +35,16 @@ class User():
         return self._cpf
    
 
-    def create_ad(self, ads_dict, category, description, price):
-        ad = Ad(self._username, category, description, price)
+    def create_OfferAd(self, ads_dict, category, description, price):
+        ad = OfferAd(self._username, category, description, price)
+        ad_id = len(ads_dict) + 1
+        ads_dict.update({ad_id: ad})
+        print(f"Anúncio de id: {ad_id} criado com sucesso!\n")
+
+        return ad_id
+    
+    def create_LookingForAd(self, ads_dict, category, description):
+        ad = LookingForAd(self._username, category, description)
         ad_id = len(ads_dict) + 1
         ads_dict.update({ad_id: ad})
         print(f"Anúncio de id: {ad_id} criado com sucesso!\n")

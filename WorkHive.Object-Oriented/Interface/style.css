@@ -1,0 +1,62 @@
+body {
+    height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    color: #3a3637;
+    background-color: #fef9f1;
+    margin: 0px;
+    padding: 0px;
+}
+
+label {
+    margin-top: 8px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 8px;
+    /* outline: none; */
+    border: 1px solid grey;
+    margin-bottom: 15px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    border-radius: 10px;
+    padding: 38px 50px;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.login svg {
+    align-self: center;
+    height: 75px;
+    width: 75px;
+}
+
+.login button {
+    background-color: #ffbb4e;
+    padding: 10px;
+    border-radius: 8px;
+    border: 0px;
+    margin-top: 10px;
+}
+
+.login button:hover {
+    filter: brightness(105%);
+    cursor: pointer;
+}
+
+.login p.copyright {
+    align-self: center;
+    font-size: 0.75em;
+    color: #837a7c;
+}
